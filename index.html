@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>2026年贵州中考成绩查询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(180deg, #e8eef5 0%, #dce4f0 40%, #f0f3f8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #2c3e50;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .header {
+            text-align: center;
+            padding-top: 10px;
+        }
+        .header .logo {
+            display: inline-block;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #1a3c6d, #2c5ea8);
+            border-radius: 16px;
+            line-height: 56px;
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            box-shadow: 0 6px 20px rgba(26,60,109,0.25);
+        }
+        .header h1 {
+            font-size: 25px;
+            font-weight: 700;
+            color: #1a3c6d;
+        }
+        .header .sub {
+            font-size: 13px;
+            color: #7a8a9a;
+            letter-spacing: 1px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 24px 24px;
+            box-shadow: 0 4px 24px rgba(26,60,109,0.10);
+            border: 1px solid #dde4ed;
+            position: relative;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1a3c6d, #3b7dd8, #c41e3a);
+            border-radius: 4px 4px 0 0;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #3a4f66;
+            margin-bottom: 6px;
+        }
+        .form-group label .required {
+            color: #c41e3a;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f7f9fc;
+            color: #1a2b3c;
+            outline: none;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .form-group input:focus {
+            border-color: #2c5ea8;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(44,94,168,0.08);
+        }
+        .form-group input.shake {
+            animation: shake 0.5s ease;
+            border-color: #e74c3c !important;
+            background: #fffafa !important;
+        }
+        .hint {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        .hint.error {
+            color: #c41e3a;
+            font-weight: 500;
+        }
+        .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .captcha-row .captcha-box {
+            background: #f0f3f8;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a3c6d;
+            white-space: nowrap;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            filter: blur(0.3px);
+        }
+        .captcha-box::before,
+        .captcha-box::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: #667788;
+            opacity: 0.4;
+        }
+        .captcha-box::before {
+            top: 30%;
+            transform: rotate(-12deg);
+        }
+        .captcha-box::after {
+            top: 60%;
+            transform: rotate(10deg);
+        }
+        .captcha-row input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #fff;
+            background: linear-gradient(135deg, #1a3c6d, #2559a0);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(26,60,109,0.25);
+            margin-top: 22px;
+            transition: 0.2s;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .result-wrapper {
+            display: none;
+            margin-top: 20px;
+        }
+        .result-wrapper.show {
+            display: block;
+            animation: bounceIn 0.5s ease;
+        }
+        .result-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px 20px 18px;
+            box-shadow: 0 12px 40px rgba(26,60,109,0.18);
+            border: 1px solid #dde4ed;
+        }
+        .result-header {
+            text-align: center;
+            border-bottom: 2px dashed #eef2f7;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+        .result-header .name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a3c6d;
+        }
+        .result-header .id {
+            font-size: 13px;
+            color: #8899aa;
+            margin-top: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table tr {
+            border-bottom: 1px solid #f0f4f8;
+        }
+        table tr:last-child {
+            border-bottom: none;
+        }
+        table td {
+            padding: 11px 4px;
+            font-size: 15px;
+        }
+        table td:first-child {
+            color: #5a6c7d;
+        }
+        table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #1a3c6d;
+        }
+        .total-row td {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c41e3a;
+        }
+        @keyframes shake {
+            0%,100% {transform: translateX(0)}
+            20% {transform: translateX(-8px)}
+            40% {transform: translateX(8px)}
+            60% {transform: translateX(-8px)}
+            80% {transform: translateX(8px)}
+        }
+        @keyframes bounceIn {
+            0% {opacity:0; transform: scale(0.9)}
+            70% {transform: scale(1.03)}
+            100% {opacity:1; transform: scale(1)}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">查</div>
+            <h1>2026年贵州中考成绩查询</h1>
+            <p class="sub">贵州省中考统一查询通道</p>
+        </div>
+
+        <div class="card">
+            <div class="form-group">
+                <label>准考证号 <span class="required">*</span></label>
+                <input id="zkzh" type="text" placeholder="输入10位准考证号">
+                <div class="hint">以纸质准考证号为准</div>
+            </div>
+            <div class="form-group">
+                <label>考生姓名 <span class="required">*</span></label>
+                <input id="stuName" type="text" placeholder="填写真实姓名">
+            </div>
+            <div class="form-group">
+                <label>身份证后六位 <span class="required">*</span></label>
+                <input id="id6" type="text" placeholder="身份证末尾6位数字">
+            </div>
+            <div class="form-group">
+                <label>验证码 <span class="required">*</span></label>
+                <div class="captcha-row">
+                    <input id="captchaInput" type="text" placeholder="输入验证码">
+                    <div class="captcha-box" id="captchaCode"></div>
+                </div>
+            </div>
+            <div class="hint error" id="errMsg"></div>
+            <button class="btn" id="queryBtn">立即查询成绩</button>
+        </div>
+
+        <div class="result-wrapper" id="resultBox">
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="name" id="showName">——</div>
+                    <div class="id">准考证：<span id="showZkzh">——</span></div>
+                </div>
+                <table>
+                    <tr>
+                        <td>语文</td>
+                        <td id="ywScore">0</td>
+                    </tr>
+                    <tr>
+                        <td>数学</td>
+                        <td id="sxScore">0</td>
+                    </tr>
+                    <tr>
+                        <td>英语</td>
+                        <td id="yyScore">0</td>
+                    </tr>
+                    <tr>
+                        <td>理科综合</td>
+                        <td id="lhScore">0</td>
+                    </tr>
+                    <tr>
+                        <td>文科综合</td>
+                        <td id="lwScore">0</td>
+                    </tr>
+                    <tr>
+                        <td>体育</td>
+                        <td id="tyScore">0</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>总分</td>
+                        <td id="allScore">0</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+const zkzh = document.getElementById('zkzh');
+const stuName = document.getElementById('stuName');
+const id6 = document.getElementById('id6');
+const captchaInput = document.getElementById('captchaInput');
+const captchaCode = document.getElementById('captchaCode');
+const errMsg = document.getElementById('errMsg');
+const queryBtn = document.getElementById('queryBtn');
+const resultBox = document.getElementById('resultBox');
+
+// 存档：每条存储 准考证、姓名、身份证、各科分数
+let historyList = [];
+let currentCaptcha = "";
+
+const regChinese = /^[\u4e00-\u9fa5]+$/;
+const regZk = /^26\d{8}$/;
+
+// 生成4位验证码
+function createCaptcha() {
+    let code = "";
+    for(let i=0;i<4;i++) code += Math.floor(Math.random()*10);
+    currentCaptcha = code;
+    captchaCode.innerText = code;
+}
+createCaptcha();
+captchaCode.onclick = createCaptcha;
+
+// 输入框修改仅隐藏成绩，不刷新验证码
+function inputReset() {
+    errMsg.textContent = "";
+    resultBox.classList.remove("show");
+    [zkzh, stuName, id6, captchaInput].forEach(el=>el.classList.remove("shake"));
+}
+zkzh.addEventListener("input", inputReset);
+stuName.addEventListener("input", inputReset);
+id6.addEventListener("input", inputReset);
+captchaInput.addEventListener("input", inputReset);
+
+// 随机总分
+function getRandomTotal() {
+    const r = Math.random();
+    return r < 0.7 ? Math.floor(Math.random() * 200) + 300 : Math.floor(Math.random() * 101) + 500;
+}
+
+// 分配无负分成绩
+function getScore(total) {
+    const min = {yw:60, sx:60, yy:50, lh:70, lw:60, ty:30};
+    const ty = Math.floor(Math.random() * 21) + min.ty;
+    let rest = total - (min.yw + min.sx + min.yy + min.lh + min.lw + ty);
+    let yw = min.yw + Math.floor(Math.random() * rest);
+    rest -= yw - min.yw;
+    let sx = min.sx + Math.floor(Math.random() * rest);
+    rest -= sx - min.sx;
+    let yy = min.yy + Math.floor(Math.random() * rest);
+    rest -= yy - min.yy;
+    let lh = min.lh + Math.floor(Math.random() * rest);
+    rest -= lh - min.lh;
+    let lw = min.lw + rest;
+    return {yw, sx, yy, lh, lw, ty, total};
+}
+
+queryBtn.onclick = function() {
+    errMsg.textContent = "";
+    let valid = true;
+    [zkzh, stuName, id6, captchaInput].forEach(el=>el.classList.remove("shake"));
+
+    const zk = zkzh.value.trim();
+    const name = stuName.value.trim();
+    const id = id6.value.trim();
+    const cap = captchaInput.value.trim();
+
+    // 基础格式校验
+    if (!zk) {
+        errMsg.textContent = "请输入准考证号";
+        zkzh.classList.add("shake");
+        valid = false;
+    } else if (!regZk.test(zk)) {
+        errMsg.textContent = "准考证必须10位数字且以26开头";
+        zkzh.classList.add("shake");
+        valid = false;
+    }
+    if (!name) {
+        errMsg.textContent = "请输入考生姓名";
+        stuName.classList.add("shake");
+        valid = false;
+    } else if (!regChinese.test(name)) {
+        errMsg.textContent = "姓名只能填写汉字";
+        stuName.classList.add("shake");
+        valid = false;
+    }
+    if (id.length !== 6 || isNaN(id)) {
+        errMsg.textContent = "身份证后六位为6位数字";
+        id6.classList.add("shake");
+        valid = false;
+    }
+    if (cap !== currentCaptcha) {
+        errMsg.textContent = "验证码错误";
+        captchaInput.classList.add("shake");
+        createCaptcha();
+        valid = false;
+    }
+    if (!valid) return;
+
+    // 1. 查找完全匹配的存档（准考证+姓名+身份证三者一模一样）
+    const existRecord = historyList.find(item => item.zk === zk && item.name === name && item.id === id);
+    if(existRecord){
+        // 完全相同信息，直接读取旧成绩展示，不重新随机
+        renderScore(existRecord);
+        resultBox.classList.add("show");
+        createCaptcha();
+        return;
+    }
+
+    // 2. 只改姓名、准考证+身份证不变 → 拦截
+    const sameZkIdRecord = historyList.find(item => item.zk === zk && item.id === id);
+    if(sameZkIdRecord){
+        errMsg.textContent = "仅修改姓名无效，更换考生需同时修改准考证与身份证后六位";
+        zkzh.classList.add("shake");
+        id6.classList.add("shake");
+        return;
+    }
+
+    // 3. 准考证单独重复 / 身份证单独重复 → 拦截
+    const repeatZk = historyList.find(item => item.zk === zk);
+    const repeatId = historyList.find(item => item.id === id);
+    if(repeatZk || repeatId){
+        errMsg.textContent = "该准考证/身份证信息已存在存档，不可重复查询";
+        zkzh.classList.add("shake");
+        id6.classList.add("shake");
+        return;
+    }
+
+    // 全新信息，生成新成绩并存档
+    const newScore = getScore(getRandomTotal());
+    const newRecord = {
+        zk, name, id,
+        yw: newScore.yw,
+        sx: newScore.sx,
+        yy: newScore.yy,
+        lh: newScore.lh,
+        lw: newScore.lw,
+        ty: newScore.ty,
+        total: newScore.total
+    };
+    historyList.push(newRecord);
+
+    renderScore(newRecord);
+    resultBox.classList.add("show");
+    createCaptcha();
+}
+
+// 渲染成绩面板统一函数
+function renderScore(record){
+    document.getElementById("showName").innerText = record.name;
+    document.getElementById("showZkzh").innerText = record.zk;
+    document.getElementById("ywScore").innerText = record.yw;
+    document.getElementById("sxScore").innerText = record.sx;
+    document.getElementById("yyScore").innerText = record.yy;
+    document.getElementById("lhScore").innerText = record.lh;
+    document.getElementById("lwScore").innerText = record.lw;
+    document.getElementById("tyScore").innerText = record.ty;
+    document.getElementById("allScore").innerText = record.total;
+}
+</script>
+</body>
+</html>
